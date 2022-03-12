@@ -8,7 +8,7 @@ module.exports = {
         const userObj = {
           users: users,
         };
-        return res.json(studentObj);
+        return res.json(userObj);
       })
       .catch((err) => {
         console.log(err);

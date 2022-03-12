@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const dateFormat = require('../../ucsd-sd-fsf-pt-09-2021-u-c/ucsd-sd-fsf-pt-09-2021-u-c/18-NoSQL/02-Homework/Main/utils/dateFormat');
+const reactionSchema = require('./Reaction')
 
 // Schema to create a course model
 const thoughtSchema = new Schema(
@@ -29,13 +29,12 @@ const thoughtSchema = new Schema(
   }
 );
 
-userSchema
-  .virtual('reactionCount')
+thoughtSchema.virtual('reactionCount')
   // Getter
   .get(function () {
     return this.reactions.length;
   })
 
-const Course = model('course', thoughtSchema);
+const Course = model('Thoughts', thoughtSchema);
 
 module.exports = Course;
