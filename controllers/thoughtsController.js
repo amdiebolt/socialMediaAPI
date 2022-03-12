@@ -34,13 +34,18 @@ module.exports = {
   },
   // Delete a course
   deleteThoughts(req, res) {
-    Thoughts.findOneAndDelete({ _id: req.params.thoughtsId })
-      .then((thoughts) =>
-        !thoughts
-          ? res.status(404).json({ message: 'No user with that ID' })
-          : User.deleteMany({ _id: { $in: thoughts.user } })
+    Thoughts.findOneAndRemove({ _id: req.params.thoughtsId })
+      .then((thoughts) => {
+        if (!thoughts) {
+          return res.status(404).json({ message: 'No user with that ID' })
+      }
+      return User.findOneAndUpdate(
+        { thoughts: req.params.thoughtId },
+        { $pull: { thoughts: req.params.thoughtId } },
+        { new: true }
+      )}
       )
-      .then(() => res.json({ message: 'Thought and User deleted!' }))
+      .then(() => res.json({ message: 'Thought deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
   // Update a course

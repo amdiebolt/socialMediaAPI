@@ -54,6 +54,19 @@ module.exports = {
       });
   },
 
+  updateUser(req, res) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'No user with this id!' })
+          : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
 
   addFriend(req, res) {
     console.log('You are adding a friend');
@@ -76,8 +89,8 @@ module.exports = {
   removeFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { friendId: req.params.friendId }  },
-      { runValidators: true, new: true }
+      { $pull: { friends: req.params.friendId }  },
+      { new: true }
     )
       .then((user) =>
         !user
