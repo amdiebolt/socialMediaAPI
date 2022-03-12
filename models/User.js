@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose')
-const thoughttSchema = require('./Reaction')
+
 
 // Schema to create Student model
 const userSchema = new Schema(
@@ -21,7 +21,7 @@ const userSchema = new Schema(
     thoughts: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Thought',
+        ref: 'Thoughts',
       },
     ],
     friends: [
@@ -35,6 +35,7 @@ const userSchema = new Schema(
     toJSON: {
       getters: true,
     },
+    id: false
   }
 )
 
@@ -45,6 +46,6 @@ userSchema
     return this.friends.length;
   })
 
-  const User = model('user', userSchema)
+  const User = model('User', userSchema)
 
 module.exports = User
