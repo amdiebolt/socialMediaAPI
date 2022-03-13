@@ -24,7 +24,7 @@ router
   .post(addReaction)
 
 router
-  .route('/:thoughtsId/reaction/:reactionId')
+  .route('/:thoughtsId/reaction/:reactionsId')
   .delete(removeReaction)
   
 module.exports = router;
