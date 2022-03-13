@@ -40,8 +40,8 @@ module.exports = {
           return res.status(404).json({ message: 'No user with that ID' })
       }
       return User.findOneAndUpdate(
-        { thoughts: req.params.thoughtId },
-        { $pull: { thoughts: req.params.thoughtId } },
+        { thoughts: req.params.thoughtsId },
+        { $pull: { thoughts: req.params.thoughtsId } },
         { new: true }
       )}
       )
@@ -67,7 +67,7 @@ module.exports = {
     console.log(req.body);
     Thoughts.findOneAndUpdate(
       { _id: req.params.thoughtsId },
-      { $addToSet: { reaction: req.body } },
+      { $addToSet: { reactions: req.body } },
       { runValidators: true, new: true }
     )
       .then((thoughts) =>
@@ -82,7 +82,7 @@ module.exports = {
   removeReaction(req, res) {
     Thoughts.findOneAndUpdate(
       { _id: req.params.thoughtsId },
-      { $pull: { reaction: { reactionId: req.params.reactionId } } },
+      { $pull: { reactions: { reactionsId: req.params.reactionsId } } },
       { runValidators: true, new: true }
     )
       .then((thoughts) =>
